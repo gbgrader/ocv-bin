@@ -1,0 +1,2 @@
+# Load mise.<os>.toml (e.g. mise.windows.toml) on top of mise.toml.
+auto_env = true
