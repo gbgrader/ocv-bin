@@ -4,3 +4,4 @@ out/
 *.zip
 smoke/smoke
 smoke/smoke.exe
+.vscode/
