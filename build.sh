@@ -139,7 +139,7 @@ perl -pi -e 's|^prefix=.*|prefix=\${pcfiledir}/../..|' "$pc"
 
 # OpenCV's MinGW .pc file leaves out these system libraries, which highgui and videoio use.
 if [[ "$platform" == windows ]]; then
-  perl -pi -e 's|^(Libs\.private:.*)$|$1 -lcomdlg32 -loleaut32 -luuid|' "$pc"
+  perl -pi -e 's|^(Libs\.private:.*?)(\r?)$|$1 -lcomdlg32 -loleaut32 -luuid$2|' "$pc"
 fi
 
 # Expand Libs + Libs.private (what `pkg-config --static --libs` prints) with @PREFIX@ as the prefix,
@@ -148,7 +148,7 @@ perl -e '
   my %var = (prefix => "\@PREFIX\@");
   my %field;
   while (<>) {
-    chomp;
+    s/\r?\n\z//;  # the .pc file has CRLF line endings on Windows
     if (/^(\w+)=(.*)$/) { $var{$1} //= $2 }
     elsif (/^([\w.]+):\s*(.*)$/) { $field{$1} = $2 }
   }
