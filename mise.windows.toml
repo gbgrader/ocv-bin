@@ -1,0 +1,4 @@
+# Same gcc as the one gbgrader/MarkIt pins for Windows developers. The libraries have to be built with
+# the toolchain (and C runtime, UCRT) that they'll be linked with.
+[tools]
+"github:brechtsanders/winlibs_mingw" = { version = "16.2.0posix-23.1.3-14.0.0-ucrt-r3", asset_pattern = "winlibs-x86_64-posix-seh-gcc-16.2.0-mingw-w64ucrt-14.0.0-r3.zip" }
