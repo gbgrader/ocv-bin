@@ -61,10 +61,13 @@ flags=(
   # Bundle the codecs instead of linking whatever the build machine has installed.
   -DBUILD_ZLIB=ON
   -DBUILD_PNG=ON
-  -DBUILD_JPEG=ON
   -DBUILD_TIFF=ON
   -DBUILD_WEBP=ON
   -DBUILD_OPENJPEG=ON
+  # No JPEG: MuPDF, which MarkIt links next to OpenCV, bundles its own libjpeg under the same symbol
+  # names, so a static link would keep one copy and the other library would call the wrong one.
+  # MarkIt decodes JPEGs in Go instead.
+  -DWITH_JPEG=OFF
   -DWITH_JASPER=OFF
   -DWITH_OPENEXR=OFF
   -DWITH_AVIF=OFF

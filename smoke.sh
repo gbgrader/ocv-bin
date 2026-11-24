@@ -23,6 +23,12 @@ exe=smoke
 go build -o "$exe" .
 "./$exe" "$ocv_version"
 
+# Any libjpeg symbol would clash with the libjpeg MuPDF bundles (see WITH_JPEG in build.sh).
+if nm --defined-only -g "$prefix"/lib/*.a "$prefix"/lib/opencv4/3rdparty/*.a 2>/dev/null | grep -E ' _?jpeg_' >/dev/null; then
+  echo "the archives define libjpeg symbols, which clash with MuPDF's libjpeg" >&2
+  exit 1
+fi
+
 # Allowlist rather than denylist: anything that isn't part of the OS or the C/C++ runtime means the
 # build picked up a library from the build machine, which the users' machines won't have.
 echo "shared library dependencies:"

@@ -33,7 +33,8 @@ cgo-ldflags.txt           all linker flags for a static link, with @PREFIX@ for 
 
 Only the modules gocv's main package uses are built: core, imgproc, imgcodecs, highgui, videoio, video,
 objdetect, features2d, calib3d, dnn, photo and their dependencies. There's no contrib, no GUI or
-camera/video backends, and no TBB. The image codecs are bundled.
+camera/video backends, and no TBB. The image codecs are bundled, except JPEG: it would clash with the
+libjpeg that MuPDF bundles, so OpenCV can't read or write JPEGs (decode them in Go instead).
 
 ## Using it
 
@@ -56,7 +57,7 @@ With mise, the archive installs like a tool:
 
 ```toml
 [tools]
-"github:gbgrader/ocv-bin" = "4.13.0-1"
+"github:gbgrader/ocv-bin" = "4.13.0-2"
 
 [env]
 GOFLAGS = "-tags=customenv"
